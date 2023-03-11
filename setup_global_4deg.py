@@ -529,7 +529,7 @@ class GlobalFourDegreeSetup(VerosSetup):
         vs.surfPress_f = read_int_update(vs.surfPress_f, 'sp', 'sfc') # [Pa]
 
 
-        formfactors =  xr.open_dataset('/Users/jgaertne/Documents/forcing data/coast/formfactor.nc')
+        formfactors =  xr.open_dataset('formfactor.nc')
 
         vs.Fu = update(vs.Fu, at[2:-2,2:-2], formfactors.fu)
         vs.Fv = update(vs.Fv, at[2:-2,2:-2], formfactors.fv)
