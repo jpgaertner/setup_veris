@@ -3,3 +3,4 @@
 !formfactor.nc
 .pyc
 __pycache__/
+*.h5
