@@ -1,0 +1,5 @@
+.DS_Store
+*.nc
+!formfactor.nc
+.pyc
+__pycache__/
