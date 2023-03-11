@@ -798,7 +798,7 @@ def set_forcing_kernel(state):
     vs.Area = ridging(state)
 
     # calculate thermodynamic ice growth
-    vs.hIceMean, vs.hSnowMean, vs.Area, vs.TSurf, vs.saltflux, vs.EmPmR, vs.forc_salt_surface_ice, \
+    vs.hIceMean, vs.hSnowMean, vs.Area, vs.TSurf, vs.EmPmR, vs.forc_salt_surface_ice, \
         vs.Qsw, vs.Qnet, vs.SeaIceLoad, vs.IcePenetSW, vs.recip_hIceMean = Growth(state)
 
     # fill overlaps
@@ -827,7 +827,6 @@ def set_forcing_kernel(state):
             hSnowMean = vs.hSnowMean,
             Area = vs.Area,
             TSurf = vs.TSurf,
-            saltflux = vs.saltflux,
             EmPmR = vs.EmPmR,
             Qsw = vs.Qsw,
             Qnet = vs.Qnet,
@@ -864,7 +863,6 @@ def set_forcing_kernel(state):
             hSnowMean = vs.hSnowMean,
             Area = vs.Area,
             TSurf = vs.TSurf,
-            saltflux = vs.saltflux,
             EmPmR = vs.EmPmR,
             Qsw = vs.Qsw,
             Qnet = vs.Qnet,
@@ -904,7 +902,6 @@ def set_forcing_kernel(state):
             hSnowMean = vs.hSnowMean,
             Area = vs.Area,
             TSurf = vs.TSurf,
-            saltflux = vs.saltflux,
             EmPmR = vs.EmPmR,
             Qsw = vs.Qsw,
             Qnet = vs.Qnet,
