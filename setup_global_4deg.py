@@ -752,12 +752,16 @@ def set_forcing_kernel(state):
     vs.aqh       = current_value(vs.aqh_f)
     vs.precip    = current_value(vs.precip_f)
     vs.snowfall  = current_value(vs.snowfall_f)
-    # vs.evap      = current_value(vs.evap_f)
     vs.surfPress = current_value(vs.surfPress_f)
 
 
     # calculate evaporation from latent heat flux
-    vs.evap = lat / ( settings.lhEvap * settings.rhoSea )
+    if use_cesm_forcing and not use_mitgcm_forcing:
+        vs.evap = ocn_lat   / ( settings.lhEvap * settings.rhoSea )
+    if use_mitgcm_forcing and not use_cesm_forcing:
+        vs.evap = lat       / ( settings.lhEvap * settings.rhoSea )
+    else:
+        vs.evap = current_value(vs.evap_f)
 
     # fill overlaps of the forcing fields used in the dynamics routines.
     # the other forcing fields are only used in the thermodynamic routines
