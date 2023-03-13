@@ -502,7 +502,12 @@ class GlobalFourDegreeSetup(VerosSetup):
                 vs.forc_iw_surface, at[2:-2, 2:-2], self._read_forcing("wind_energy") / settings.rho_0 * 0.2
             )
 
-        ##### veris #####
+
+
+        ###############################################
+        #################### VERIS ####################
+        ###############################################
+
 
         # read forcing data, interpolate it to veros grid and update the variable
         def read_int_update(field, var_read, file):
@@ -621,15 +626,6 @@ def set_forcing_kernel(state):
     def current_value(field):
         return f1 * field[:, :, n1] + f2 * field[:, :, n2]
 
-    spres   = current_value(vs.spres)
-    zbot    = current_value(vs.zbot)
-    ubot    = current_value(vs.ubot)
-    vbot    = current_value(vs.vbot)
-    tcc     = current_value(vs.tcc)
-    qbot    = current_value(vs.qbot)
-    rbot    = current_value(vs.rbot)
-    tbot    = current_value(vs.tbot)
-    thbot   = current_value(vs.thbot)
     swr_net = current_value(vs.swr_net)
     lwr_dw  = current_value(vs.lwr_dw)
 
@@ -638,6 +634,16 @@ def set_forcing_kernel(state):
 
 
     if use_cesm_forcing and not use_mitgcm_forcing:
+        spres   = current_value(vs.spres)
+        zbot    = current_value(vs.zbot)
+        ubot    = current_value(vs.ubot)
+        vbot    = current_value(vs.vbot)
+        tcc     = current_value(vs.tcc)
+        qbot    = current_value(vs.qbot)
+        rbot    = current_value(vs.rbot)
+        tbot    = current_value(vs.tbot)
+        thbot   = current_value(vs.thbot)
+
         # ocean net surface heat flux
         ocn_sen, ocn_lat, ocn_lwup, _, ocn_taux, ocn_tauy, _, _, _, _, _, _ = \
             flux_cesm.flux_atmOcn(ocn_mask, rbot, zbot, ubot, vbot, qbot, tbot, thbot,
@@ -816,10 +822,9 @@ def set_forcing_kernel(state):
     vs.forc_temp_surface = - vs.Qnet / ( settings.cpWater * settings.rhoSea )
     vs.forc_salt_surface = vs.forc_salt_surface_ice + forc_salt_surface_res
 
-    # # apply simple ice mask
-    # mask = npx.logical_and(vs.temp[:, :, -1, vs.tau] * ocn_mask < -2, vs.forc_temp_surface < 0.0)
-    # vs.forc_temp_surface = npx.where(mask, 0.0, vs.forc_temp_surface)
-    # vs.forc_salt_surface = npx.where(mask, 0.0, forc_salt_surface_res)
+    # use this if you want to use the salt nudging in regions of open water only
+    # vs.forc_salt_surface = vs.forc_salt_surface_ice + forc_salt_surface_res * ( 1 - vs.Area )
+
 
     if use_cesm_forcing and not use_mitgcm_forcing:
         KO = KernelOutput(
